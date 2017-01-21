@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="LoginPrismExample.Login.Views.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:LoginPrismExample.Login.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:interactionRequest="http://prismlibrary.com/"
+             xmlns:viewModels="clr-namespace:LoginPrismExample.Login.ViewModels"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance viewModels:LoginViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <i:Interaction.Triggers>
+        <interactionRequest:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
+            <!-- This PopupWindowAction does not have a custom view defined, therefore it will try to use a DefaultConfirmationWindow -->
+            <!-- which is a window used by default by Prism to shown IConfirmation implementations -->
+            <!-- That window will be show as a modal dialog and centered over this window -->
+            <interactionRequest:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True" />
+        </interactionRequest:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    <Grid x:Name="LoginLayer">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition MaxWidth="400" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+              Background="LightBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0*" />
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="9*" />
+                <RowDefinition/>
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Log in" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontWeight="Bold"
+                       HorizontalAlignment="Center" Margin="9,5" FontSize="28" />
+
+            <TextBlock Text="Username" Grid.Row="2" Grid.Column="0" Margin="3,3,3,3" FontSize="24" />
+            <TextBox Grid.Row="2" Grid.Column="1" Margin="3,3,3,3" FontSize="24"
+                     Text="{Binding LoginUsername, UpdateSourceTrigger=PropertyChanged}" Grid.RowSpan="2"></TextBox>
+            <TextBlock Text="Password" Grid.Row="4" Grid.Column="0" Margin="3,3,3,3" FontSize="24" />
+            <TextBox Grid.Row="4" Grid.Column="1" Margin="3,3,3,3"  FontSize="24"
+                     Text="{Binding LoginPassword, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+            <Button Content="Log in" Grid.Row="5" Grid.Column="1" Margin="3,3,3,3" FontSize="24"
+                    IsEnabled="{Binding CanLogin}" IsDefault="True">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding LoginCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>
