@@ -102,11 +102,6 @@ namespace LoginPrismExample.Login.ViewModels
                 n => { InteractionResultMessage = "The user was notified."; });
         }
 
-        private bool CanAttemptLogin()
-        {
-            return LoginPassword != null && LoginPassword.Trim().Length > 0;
-        }
-
         private void AttemptLogin(object obj)
         {
             _loginModel.AttempLogin(LoginPassword);
